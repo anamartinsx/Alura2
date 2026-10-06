@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meu Projeto de Vida</title>
+
+<style>
+* {
+box-sizing: border-box;
+}
+
+body {
+font-family: Arial, sans-serif;
+background: #f3f0ff;
+color: #333;
+margin: 0;
+}
+
+header {
+background: #7055c9;
+color: white;
+text-align: center;
+padding: 35px 15px;
+}
+
+main {
+max-width: 750px;
+margin: 25px auto;
+padding: 15px;
+}
+
+section {
+background: white;
+padding: 22px;
+margin-bottom: 20px;
+border-radius: 12px;
+box-shadow: 0 3px 10px #00000010;
+}
+
+h2 {
+color: #7055c9;
+}
+
+input {
+padding: 10px;
+width: 100%;
+margin: 8px 0;
+border: 1px solid #ccc;
+border-radius: 6px;
+}
+
+button {
+background: #7055c9;
+color: white;
+border: none;
+padding: 12px 18px;
+border-radius: 7px;
+cursor: pointer;
+margin-top: 8px;
+}
+
+button:hover {
+background: #513a9e;
+}
+
+li {
+margin: 12px 0;
+}
+
+.barra {
+background: #ddd;
+height: 20px;
+border-radius: 10px;
+overflow: hidden;
+}
+
+#progresso {
+background: #7055c9;
+height: 100%;
+width: 0%;
+transition: width 0.4s;
+}
+
+footer {
+background: #7055c9;
+color: white;
+text-align: center;
+padding: 15px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>Meu Projeto de Vida</h1>
+<p>Planejando hoje para conquistar o amanhã!</p>
+</header>
+
+<main>
+
+<section>
+<h2>Meus objetivos</h2>
+<p>
+Ter objetivos é importante para organizar o futuro.
+Com planejamento e dedicação, podemos alcançar
+nossas metas pessoais e profissionais.
+</p>
+</section>
+
+<section>
+<h2>Minhas metas para o futuro</h2>
+
+<ul id="listaMetas">
+<li>
+<input type="checkbox" onchange="atualizarProgresso()">
+Concluir o Ensino Médio
+</li>
+<li>
+<input type="checkbox" onchange="atualizarProgresso()">
+Entrar em uma faculdade
+</li>
+<li>
+<input type="checkbox" onchange="atualizarProgresso()">
+Aprender novas habilidades
+</li>
+<li>
+<input type="checkbox" onchange="atualizarProgresso()">
+Conquistar uma profissão
+</li>
+<li>
+<input type="checkbox" onchange="atualizarProgresso()">
+Alcançar independência financeira
+</li>
+</ul>
+
+<p id="resultado">Você concluiu 0 de 5 metas (0%).</p>
+
+<div class="barra">
+<div id="progresso"></div>
+</div>
+
+<button onclick="limparMetas()">Reiniciar metas</button>
+</section>
+
+<section>
+<h2>Adicionar uma nova meta</h2>
+
+<input
+type="text"
+id="novaMeta"
+placeholder="Digite uma meta para o futuro"
+>
+
+<button onclick="adicionarMeta()">Adicionar meta</button>
+</section>
+
+<section>
+<h2>Mensagem para o futuro</h2>
+
+<button onclick="mostrarMensagem()">
+Mostrar mensagem
+</button>
+
+<p id="mensagem"></p>
+</section>
+
+</main>
+
+<footer>
+<p>Projeto de Vida | HTML, CSS e JavaScript</p>
+</footer>
+
+<script>
+function atualizarProgresso() {
+const metas = document.querySelectorAll(
+'#listaMetas input[type="checkbox"]'
+);
+
+let concluidas = 0;
+
+metas.forEach(function(meta) {
+if (meta.checked) {
+concluidas++;
+}
+});
+
+let total = metas.length;
+let porcentagem = total === 0
+? 0
+: Math.round((concluidas / total) * 100);
+
+document.getElementById("resultado").innerText =
+"Você concluiu " + concluidas + " de " +
+total + " metas (" + porcentagem + "%).";
+
+document.getElementById("progresso").style.width =
+porcentagem + "%";
+}
+
+function adicionarMeta() {
+const campo = document.getElementById("novaMeta");
+const texto = campo.value.trim();
+
+if (texto === "") {
+alert("Digite uma meta antes de adicionar!");
+return;
+}
+
+const lista = document.getElementById("listaMetas");
+const item = document.createElement("li");
+const checkbox = document.createElement("input");
+
+checkbox.type = "checkbox";
+checkbox.addEventListener(
+"change",
+atualizarProgresso
+);
+
+item.appendChild(checkbox);
+item.appendChild(document.createTextNode(" " + texto));
+lista.appendChild(item);
+
+campo.value = "";
+atualizarProgresso();
+}
+
+function limparMetas() {
+const caixas = document.querySelectorAll(
+'#listaMetas input[type="checkbox"]'
+);
+
+caixas.forEach(function(caixa) {
+caixa.checked = false;
+});
+
+atualizarProgresso();
+}
+
+function mostrarMensagem() {
+document.getElementById("mensagem").innerText =
+"Cada pequena conquista me aproxima dos meus sonhos. " +
+"Vou continuar aprendendo e me esforçando!";
+}
+</script>
+
+</body>
+</html>
